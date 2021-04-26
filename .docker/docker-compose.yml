@@ -1,0 +1,56 @@
+version: "3.7"
+services:
+  php-cli:
+    build:
+      context: php
+      dockerfile: Dockerfile
+      args:
+        PUID: $PUID
+        PGID: $PGID
+        PHP_VERSION: $PHP_VERSION
+        PHP_TYPE: cli
+    image: logicstoreconcept-php-cli
+    container_name: logicstore-php
+    command: symfony serve
+    env_file:
+      - .env
+    working_dir: /var/www/application
+    depends_on:
+      - postgres
+    volumes:
+      - ..:/var/www/application
+      - ./php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/zz-overrides.ini
+    ports:
+      - "8000:8000"
+    networks:
+      - logicstorenetwork
+
+
+  postgres:
+    image: postgres:10
+    container_name: logicstore-postgres
+    volumes:
+      - logicstore_postgres_volume:/var/lib/postgresql/data
+      - ./psql/test-database.sh:/docker-entrypoint-initdb.d/test-database.sh
+    env_file:
+      - .env
+    environment:
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_DB: $POSTGRES_DB
+    ports:
+      - "${POSTGRES_EXTERNAL_PORT}:5432"
+    networks:
+      - logicstorenetwork
+
+volumes:
+  logicstore_postgres_volume:
+
+networks:
+  logicstorenetwork:
+    name: logicstorenetwork
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.17.19.0/24

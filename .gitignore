@@ -8,3 +8,18 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> .docker
+/.docker/.env
+###< .docker
+
+###
+/.idea
+###> phpunit/phpunit ###
+.phpunit
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+###< symfony/phpunit-bridge ###

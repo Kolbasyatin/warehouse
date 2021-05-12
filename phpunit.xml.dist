@@ -8,8 +8,14 @@
   </coverage>
   <php>
     <ini name="error_reporting" value="-1"/>
-    <server name="APP_ENV" value="test" force="true"/>
+    <env name="APP_FIXTURES_LOAD" value="true"/>
+    <env name="PHP_IDE_CONFIG" value="serverName=cli" />
+    <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test"/>
+    <env name="APP_ENV" value="test" force="true"/>
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
     <server name="SHELL_VERBOSITY" value="-1"/>
+    <server name="SYMFONY_PHPUNIT_VERSION" value="9.5"/>
+
   </php>
   <testsuites>
     <testsuite name="Project Test Suite">
@@ -17,15 +23,23 @@
     </testsuite>
   </testsuites>
   <!-- Run `composer require symfony/phpunit-bridge` before enabling this extension -->
-  <!--
-    <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-    </listeners>
-    -->
+  <listeners>
+      <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
+        <arguments>
+          <array>
+            <!-- set this option to 0 to disable the DebugClassLoader integration -->
+            <element key="debug-class-loader"><integer>0</integer></element>
+          </array>
+        </arguments>
+      </listener>
+  </listeners>
   <!-- Run `composer require symfony/panther` before enabling this extension -->
   <!--
     <extensions>
         <extension class="Symfony\Component\Panther\ServerExtension" />
     </extensions>
     -->
+  <extensions>
+    <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
+  </extensions>
 </phpunit>

@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+    node:
+        image: node:16
+        working_dir: /var/www/application
+        user: node
+        volumes:
+            - ..:/var/www/application
+        networks:
+            - logicstorenetwork
+
+networks:
+    logicstorenetwork:
+        external:
+            name: logicstorenetwork

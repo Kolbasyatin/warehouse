@@ -27,7 +27,7 @@ services:
 
 
   postgres:
-    image: postgres:10
+    image: postgres:13
     container_name: logicstore-postgres
     volumes:
       - logicstore_postgres_volume:/var/lib/postgresql/data

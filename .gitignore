@@ -11,6 +11,7 @@
 
 ###> .docker
 /.docker/.env
+/.docker/docker-compose.override.yml
 ###< .docker
 
 ###

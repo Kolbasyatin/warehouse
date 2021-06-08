@@ -1,2 +1,23 @@
 framework:
-    workflows: null
+    workflows:
+        package:
+            type: state_machine
+            audit_trail:
+                enabled: true
+            support_strategy: App\Workflow\StrategyService
+            places:
+                - new
+                - import
+                - sorter
+                - measuring
+                - storing
+                - pallet
+                - agent
+                - shipping
+                - return
+                - done
+            transitions:
+                to_import:
+                    from: new
+                    to: import
+

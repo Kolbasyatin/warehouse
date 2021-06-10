@@ -9,8 +9,6 @@ services:
         PGID: $PGID
         PHP_VERSION: $PHP_VERSION
         PHP_TYPE: cli
-    image: logicstoreconcept-php-cli
-    container_name: logicstore-php
     command: symfony serve
     env_file:
       - .env
@@ -23,14 +21,13 @@ services:
     ports:
       - "8000:8000"
     networks:
-      - logicstorenetwork
+      - warehousenetwork
 
 
   postgres:
     image: postgres:13
-    container_name: logicstore-postgres
     volumes:
-      - logicstore_postgres_volume:/var/lib/postgresql/data
+      - warehouse_postgres_volume:/var/lib/postgresql/data
       - ./psql/test-database.sh:/docker-entrypoint-initdb.d/test-database.sh
     env_file:
       - .env
@@ -41,16 +38,16 @@ services:
     ports:
       - "${POSTGRES_EXTERNAL_PORT}:5432"
     networks:
-      - logicstorenetwork
+      - warehousenetwork
 
 volumes:
-  logicstore_postgres_volume:
+  warehouse_postgres_volume:
 
 networks:
-  logicstorenetwork:
-    name: logicstorenetwork
+  warehousenetwork:
+    name: warehousenetwork
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: 10.17.19.0/24
+        - subnet: 10.17.20.0/24

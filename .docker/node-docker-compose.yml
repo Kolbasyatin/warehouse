@@ -7,9 +7,9 @@ services:
         volumes:
             - ..:/var/www/application
         networks:
-            - logicstorenetwork
+            - warehousenetwork
 
 networks:
-    logicstorenetwork:
+    warehousenetwork:
         external:
-            name: logicstorenetwork
+            name: warehousenetwork

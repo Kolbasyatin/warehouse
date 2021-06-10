@@ -4,6 +4,14 @@ framework:
             type: state_machine
             audit_trail:
                 enabled: true
+
+        ### Разобрать что за type и что за property
+        # marking_store:
+        #   type: 'method'
+        #   property: 'state'
+        ### Тут либо supports: array
+        ### Либо support_strategy
+
             support_strategy: App\Workflow\PackageSupportStrategyService
             places:
                 - import

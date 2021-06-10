@@ -8,10 +8,10 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 RUN install-php-extensions bcmath gd intl memcached opcache pcntl pdo_pgsql pgsql xdebug zip
 
 # Add packages
-RUN apt update && apt install -y --no-install-recommends acl git openssh-client wget sudo unzip
+RUN apt update && apt install -y --no-install-recommends acl git graphviz openssh-client wget sudo unzip
 
 # Add User
-ARG PUID
+ARG PUID1
 ARG PGID
 ARG USER=logicstore
 

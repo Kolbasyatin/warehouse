@@ -9,7 +9,7 @@ namespace App\Workflow;
 use Symfony\Component\Workflow\SupportStrategy\WorkflowSupportStrategyInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 
-class StrategyService implements WorkflowSupportStrategyInterface
+class PackageSupportStrategyService implements WorkflowSupportStrategyInterface
 {
     public function supports(WorkflowInterface $workflow, object $subject): bool
     {

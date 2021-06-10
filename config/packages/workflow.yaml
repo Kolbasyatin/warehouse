@@ -4,20 +4,55 @@ framework:
             type: state_machine
             audit_trail:
                 enabled: true
-            support_strategy: App\Workflow\StrategyService
+            support_strategy: App\Workflow\PackageSupportStrategyService
             places:
-                - new
                 - import
-                - sorter
                 - measuring
-                - storing
+                - sorting
+                - store
                 - pallet
-                - agent
                 - shipping
-                - return
+                - delay
                 - done
             transitions:
-                to_import:
-                    from: new
+                measure:
+                    from: [import]
+                    to: measuring
+                sorting:
+                    from: measuring
+                    to: sorting
+                storing:
+                    from: measuring
+                    to: store
+                pallet:
+                    from: sorting
+                    to: pallet
+                shipping:
+                    from: pallet
+                    to: shipping
+                delay:
+                    from: shipping
+                    to: delay
+                done:
+                    from: shipping
+                    to: done
+                delay_return:
+                    from: delay
                     to: import
+
+        delay_storing:
+            type: state_machine
+            audit_trail:
+                enabled: true
+            support_strategy: App\Workflow\PackageSupportStrategyService
+            places:
+                - import
+                - place
+                - replace
+            transitions:
+                store:
+                    from: import
+                    to: place
+
+
 

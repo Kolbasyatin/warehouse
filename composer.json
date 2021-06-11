@@ -42,7 +42,9 @@
         "symfony/browser-kit": "^5.3",
         "symfony/css-selector": "^5.3",
         "symfony/maker-bundle": "^1.30",
-        "symfony/panther": "^1.0"
+        "symfony/panther": "^1.0",
+        "symfony/stopwatch": "^5.3",
+        "symfony/web-profiler-bundle": "^5.3"
     },
     "config": {
         "optimize-autoloader": true,

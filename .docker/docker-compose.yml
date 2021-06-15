@@ -46,8 +46,8 @@ volumes:
 networks:
   warehousenetwork:
     name: warehousenetwork
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.17.20.0/24
+#    driver: bridge
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: 10.17.20.0/24

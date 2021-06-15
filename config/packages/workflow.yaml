@@ -1,6 +1,6 @@
 framework:
     workflows:
-        package:
+        regular_package:
             type: state_machine
             audit_trail:
                 enabled: true
@@ -11,8 +11,7 @@ framework:
         #   property: 'state'
         ### Тут либо supports: array
         ### Либо support_strategy
-
-            support_strategy: App\Workflow\PackageSupportStrategyService
+            support_strategy: App\Infrastructure\Workflow\PackageSupportStrategyService
             places:
                 - import
                 - measuring
@@ -23,41 +22,48 @@ framework:
                 - delay
                 - done
             transitions:
-                measure:
-                    from: [import]
+                to_measure:
+                    from: import
                     to: measuring
-                sorting:
+                to_sorting:
                     from: measuring
                     to: sorting
-                storing:
+                to_storing:
                     from: measuring
                     to: store
-                pallet:
+                to_pallet:
                     from: sorting
                     to: pallet
-                shipping:
+                to_shipping:
                     from: pallet
                     to: shipping
-                delay:
+                to_delay:
                     from: shipping
                     to: delay
-                done:
+                to_done:
                     from: shipping
                     to: done
-                delay_return:
+                to_delay_return:
                     from: delay
                     to: import
-
-        delay_storing:
+        delay_package:
             type: state_machine
             audit_trail:
                 enabled: true
-            support_strategy: App\Workflow\PackageSupportStrategyService
+            support_strategy: App\Infrastructure\Workflow\PackageSupportStrategyService
             places:
                 - import
-                - place
-                - replace
+                - storing
+                - restoring
             transitions:
-                store:
+                to_store:
                     from: import
-                    to: place
+                    to: storing
+                to_restoring:
+                    from: storing
+                    to: restoring
+                to_import:
+                    from: restoring
+                    to: import
+
+

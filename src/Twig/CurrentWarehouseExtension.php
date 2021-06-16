@@ -2,21 +2,24 @@
 
 declare(strict_types=1);
 
-
 namespace App\Twig;
 
-
-use App\Repository\WarehouseRepository;
-use Symfony\Component\HttpFoundation\RequestStack;
+use App\Infrastructure\Warehouse\CurrentWarehouseService;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\Forms;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class CurrentWarehouseExtension extends AbstractExtension
 {
     public function __construct(
-        private WarehouseRepository $warehouseRepository,
-        private RequestStack $requestStack,
-        private string $defaultWarehouseId = 'msk'
+        private CurrentWarehouseService $currentWarehouseService,
+        private FormFactoryInterface $formFactory
     )
     {
     }
@@ -30,20 +33,18 @@ class CurrentWarehouseExtension extends AbstractExtension
 
     public function currentWarehouse()
     {
-        $warehouseId = $this->getWarehouseId();
-        $warehouse = $this->warehouseRepository->findOneById($warehouseId);
+//        return $this->currentWarehouseService->getCurrentWarehouse()->getId();
+        $data = ['warehouseId' => 'sss'];
+        $formBuilder = $this->formFactory->createBuilder(FormType::class, $data);
+        $form = $formBuilder
+            ->add('warehouseId', TextType::class)
+            ->add('OK', SubmitType::class)
+            ->getForm()
 
-        return $warehouseId;
+        ;
+
+        return $form->createView();
     }
 
-    private function getWarehouseId(): string
-    {
-        $session = $this->requestStack->getSession();
-        if (!$session->get('currentWarehouseId')) {
-            $session->set('currentWarehouseId', $this->defaultWarehouseId);
-        }
-        $id = $session->get('currentWarehouseId');
 
-        return $session->get('whsId');
-    }
 }

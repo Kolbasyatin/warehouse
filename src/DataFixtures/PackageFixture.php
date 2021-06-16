@@ -56,7 +56,7 @@ class PackageFixture extends Fixture implements DependentFixtureInterface
             ->setFid($fid)
             ->setWarehouse($warehouse)
             ->setCurrentPlace('import')
-            ->setWorkflowType(Package::WORKFLOW_TYPE_REGULAR)
+            ->setWorkflowType(Package::PACKAGE_WORKFLOW_TYPE_REGULAR)
         ;
 
         return $package;

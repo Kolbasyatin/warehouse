@@ -11,7 +11,7 @@ framework:
         #   property: 'state'
         ### Тут либо supports: array
         ### Либо support_strategy
-            support_strategy: App\Infrastructure\Workflow\PackageSupportStrategyService
+            support_strategy: App\Infrastructure\Workflow\SupportStrategies\PackageSupportStrategyService
             places:
                 - import
                 - measuring
@@ -50,7 +50,7 @@ framework:
             type: state_machine
             audit_trail:
                 enabled: true
-            support_strategy: App\Infrastructure\Workflow\PackageSupportStrategyService
+            support_strategy: App\Infrastructure\Workflow\SupportStrategies\PackageSupportStrategyService
             places:
                 - import
                 - storing
@@ -65,5 +65,25 @@ framework:
                 to_import:
                     from: restoring
                     to: import
-
-
+#Идея перегрузки workflow для складов - сделать декоратор для registry
+# и массив с workflow подменять взависимости от текущего выбраного склада
+# подменяя оригинальные на те что с расширением
+#        delay_package.sha:
+#            type: state_machine
+#            audit_trail:
+#                enabled: true
+#            support_strategy: App\Infrastructure\Workflow\SupportStrategies\PackageSupportStrategyService
+#            places:
+#                - import
+#                - storing
+#                - restoring
+#            transitions:
+#                to_store:
+#                    from: import
+#                    to: storing
+#                to_restoring:
+#                    from: storing
+#                    to: restoring
+#                to_import:
+#                    from: restoring
+#                    to: import

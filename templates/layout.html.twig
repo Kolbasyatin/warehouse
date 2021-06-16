@@ -1,5 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <div>
+        <ul>
+            <lu><a href="{{ path('index') }}">index</a></lu>
+            <lu>Current page {{ app.request.attributes.get('_route') }}</lu>
+        </ul>
+    </div>
+    <div>
+        {{ currentWarehouse() }}
+    </div>
     {% block content %}
     {% endblock %}
 {% endblock %}

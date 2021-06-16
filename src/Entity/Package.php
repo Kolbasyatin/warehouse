@@ -14,16 +14,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource]
 #[ORM\Entity(repositoryClass: PackageRepository::class)]
-#[WorkflowAvailablePlace]
+#[WorkflowAvailablePlace(markingProperty: 'currentPlace')]
 class Package implements PlaceableInterface
 {
-    public const WORKFLOW_TYPE_REGULAR = 'regular';
+    public const PACKAGE_WORKFLOW_TYPE_REGULAR = 'regular';
 
-    public const WORKFLOW_TYPE_DELAY = 'delay';
+    public const PACKAGE_WORKFLOW_TYPE_DELAY = 'delay';
 
     public const WORKFLOW_TYPES = [
-        self::WORKFLOW_TYPE_REGULAR,
-        self::WORKFLOW_TYPE_DELAY
+        self::PACKAGE_WORKFLOW_TYPE_REGULAR,
+        self::PACKAGE_WORKFLOW_TYPE_DELAY
     ];
 
     #[ORM\Id]

@@ -12,7 +12,7 @@ use Symfony\Component\Workflow\Registry;
 use Symfony\Component\Workflow\Workflow;
 
 /**
- * Во избежании случайных изменений имён workflow в описании меняем их тут.
+ * Тест количества и названия workflow от случайных изменений/удалений/добавлений
  */
 class WorkflowsNamingTest extends KernelTestCase
 {
@@ -21,23 +21,44 @@ class WorkflowsNamingTest extends KernelTestCase
         PlaceableInterface::REGULAR_PACKAGE_WORKFLOW_NAME
     ];
 
-    public function testWorkflows()
+    public function testWorkflowNaming()
     {
         static::bootKernel();
         $workflowRegistry = static::getContainer()->get(Registry::class);
+        $workflows = $this->getWorkflows($workflowRegistry);
+        $workflowNames = [];
+        foreach ($workflows as [$workflow, $strategy]) {
+            $workflowNames[] = $workflow->getName();
+        }
 
+        self::assertEqualsCanonicalizing(
+            static::WORKFLOW_NAMES,
+            $workflowNames,
+            'Количество или имена WF не соответствуют ожидаемым.'
+        );
+
+    }
+
+    private function getWorkflows(Registry $workflowRegistry): array
+    {
         $refRegistry = new \ReflectionClass(Registry::class);
         $property = $refRegistry->getProperty('workflows');
         $property->setAccessible(true);
 
-        $rawWorkflows = $property->getValue($workflowRegistry);
-
-        $actualWorkflowNames = [];
-        /** @var  $workflow Workflow */
-        foreach ($rawWorkflows as [$workflow, $strategy]) {
-            $actualWorkflowNames[] = $workflow->getName();
-        }
-
-        self::assertEqualsCanonicalizing(static::WORKFLOW_NAMES, $actualWorkflowNames);
+        return $property->getValue($workflowRegistry);
     }
+
+    //Была идея с суффиксами WF нужно делать декоратор на Registry, а это удалить
+
+//    /** @var Workflow[] $workflows */
+//    private function getWorkflowNamesWithOverrides(array $workflows)
+//    {
+//        $rawWorkflowNames = [];
+//        /** @var  $workflow Workflow */
+//        foreach ($workflows as [$workflow, $strategy]) {
+//            $rawWorkflowNames[] = explode(".", $workflow->getName());
+//        }
+//
+//        return $rawWorkflowNames;
+//    }
 }

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 
-namespace App\Infrastructure\Workflow;
+namespace App\Infrastructure\Workflow\SupportStrategies;
 
 
 use Symfony\Component\Workflow\SupportStrategy\WorkflowSupportStrategyInterface;

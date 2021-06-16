@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Validator;
 
 
+use App\Entity\Package;
 use App\Repository\PackageRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -29,19 +30,29 @@ class WorkflowAvailablePlaceValidatorTest extends KernelTestCase
 
     public function testSuccessValidate(): void
     {
-        $package = $this->packageRepository->findOneBy([]);
+        $packages = $this->packageRepository->findAll();
+        [$package1, $package2] = $packages;
+        $package2->setWorkflowType(Package::PACKAGE_WORKFLOW_TYPE_DELAY)->setCurrentPlace('storing');
 
-        $constraints = $this->validator->validate($package);
 
-        self::assertCount(0, $constraints);
+        $constraints1 = $this->validator->validate($package1);
+        $constraints2 = $this->validator->validate($package2);
+
+        self::assertSame(0, $constraints1->count());
+        self::assertSame(0, $constraints2->count());
     }
 
-    public function testFailValidate()
+    public function testFailValidate(): void
     {
-        $package = $this->packageRepository->findOneBy([]);
+        $packages = $this->packageRepository->findAll();
+        [$package1, $package2] = $packages;
+        $package1->setCurrentPlace('storing');
+        $package2->setWorkflowType(Package::PACKAGE_WORKFLOW_TYPE_DELAY)->setCurrentPlace('delay');
 
-        $constraints = $this->validator->validate($package);
+        $constraints1 = $this->validator->validate($package1);
+        $constraints2 = $this->validator->validate($package2);
 
-        self::assertGreaterThan(0, $constraints);
+        self::assertGreaterThan(0, $constraints1->count());
+        self::assertGreaterThan(0, $constraints2->count());
     }
 }

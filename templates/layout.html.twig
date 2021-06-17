@@ -1,14 +1,33 @@
 {% extends 'base.html.twig' %}
+{% import 'macros/flash.html.twig' as flash %}
 {% block body %}
-    <div>
-        <ul>
-            <lu><a href="{{ path('index') }}">index</a></lu>
-            <lu>Current page {{ app.request.attributes.get('_route') }}</lu>
-        </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {{ flash.flashbag() }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col align-self-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ path('index') }}">INDEX</a></li>
+                        <li class="breadcrumb-item">Current page {{ app.request.attributes.get('_route') }}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-sm-2 align-self-center">
+                {{ currentWarehouseSelector() }}
+            </div>
+        </div>
+        {% block content %}
+        {% endblock %}
+        {% block workflows %}
+            {% include 'svg/regular_package.svg.twig' %}
+            {% include 'svg/delay_package.svg.twig' %}
+        {% endblock %}
+
     </div>
-    <div>
-        {{ form(currentWarehouse()) }}
-    </div>
-    {% block content %}
-    {% endblock %}
+
+
 {% endblock %}

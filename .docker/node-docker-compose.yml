@@ -4,8 +4,11 @@ services:
         image: node:16
         working_dir: /var/www/application
         user: node
+        command: yarn dev-server
         volumes:
             - ..:/var/www/application
+        ports:
+            - "8080:8080"
         networks:
             - warehousenetwork
 

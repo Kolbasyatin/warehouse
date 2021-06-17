@@ -1,19 +1,21 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    {% for package in packages %}
-        <div><a href="{{ path('show-package', {'id': package.id}) }}">
-            <p>
-                <span>{{ package.fid }}</span><span>{{ package.warehouse.id }}</span>
-            </p>
-            </a>
+    <div class="container">
+        <div class="row">
+            <h3 class="text-center display-3">Packagess</h3>
         </div>
-    {% endfor %}
-</div>
+        {% for package in packages %}
+            <div class="row">
+                <div>
+                    <p>
+                        <a href="{{ path('show-package', {'id': package.id}) }}">
+                            <span>{{ package.fid }}</span><span>{{ package.warehouse.id }}</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}

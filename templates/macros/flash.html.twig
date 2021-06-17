@@ -8,7 +8,7 @@
 {% endmacro %}
 
 {% macro message(message, level = 'info') %}
-    <div class="alerts">
+    <div class="alerts" role="alert">
         <div class="alert alert-{{ level }}">
             {{ message }}
         </div>

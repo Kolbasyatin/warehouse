@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
+use App\Form\WarehouseSelectorType;
 use App\Infrastructure\Warehouse\CurrentWarehouseService;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\Forms;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -19,7 +15,7 @@ class CurrentWarehouseExtension extends AbstractExtension
 {
     public function __construct(
         private CurrentWarehouseService $currentWarehouseService,
-        private FormFactoryInterface $formFactory
+        private FormFactoryInterface $formFactory,
     )
     {
     }
@@ -27,23 +23,19 @@ class CurrentWarehouseExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('currentWarehouse', [$this, 'currentWarehouse'])
+            new TwigFunction(
+                'currentWarehouseSelector',
+                [$this, 'currentWarehouse'],
+                ['is_safe' => ['html'], 'needs_environment' => true])
         ];
     }
 
-    public function currentWarehouse()
+    public function currentWarehouse(Environment $twig): string
     {
-//        return $this->currentWarehouseService->getCurrentWarehouse()->getId();
-        $data = ['warehouseId' => 'sss'];
-        $formBuilder = $this->formFactory->createBuilder(FormType::class, $data);
-        $form = $formBuilder
-            ->add('warehouseId', TextType::class)
-            ->add('OK', SubmitType::class)
-            ->getForm()
+        $currentWarehouse = $this->currentWarehouseService->getCurrentWarehouse();
+        $form = $this->formFactory->create(WarehouseSelectorType::class, ['currentWarehouse' => $currentWarehouse]);
 
-        ;
-
-        return $form->createView();
+        return $twig->render('_warehouse-select.html.twig', ['form' => $form->createView()]);
     }
 
 

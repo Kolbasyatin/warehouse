@@ -13,8 +13,6 @@ services:
     env_file:
       - .env
     working_dir: /var/www/application
-    depends_on:
-      - postgres
     volumes:
       - ..:/var/www/application
       - ./php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/zz-overrides.ini

@@ -8,6 +8,7 @@ namespace App\Infrastructure\Warehouse;
 
 use App\Entity\Warehouse;
 use App\Repository\WarehouseRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class CurrentWarehouseService
@@ -31,7 +32,12 @@ class CurrentWarehouseService
         return $this->warehouseRepository->findOneById($warehouseId);
     }
 
-    public function changeCurrentWarehouse(Warehouse $warehouse)
+    public function getCurrentWarehouseId(): string
+    {
+        return $this->getCurrentWarehouse()->getId();
+    }
+
+    public function changeCurrentWarehouse(Warehouse $warehouse): void
     {
         $session = $this->requestStack->getSession();
         $session->set(self::SESSION_WAREHOUSE_ID_NAME, $warehouse->getId());

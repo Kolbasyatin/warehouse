@@ -8,6 +8,9 @@ use App\Form\WarehouseSelectorType;
 use App\Infrastructure\Warehouse\CurrentWarehouseService;
 use Symfony\Component\Form\FormFactoryInterface;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -30,6 +33,11 @@ class CurrentWarehouseExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function currentWarehouse(Environment $twig): string
     {
         $currentWarehouse = $this->currentWarehouseService->getCurrentWarehouse();

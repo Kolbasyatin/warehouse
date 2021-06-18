@@ -1,30 +1,34 @@
 framework:
     workflows:
-        regular_package:
+        package_regular:
             type: state_machine
             audit_trail:
                 enabled: true
-
-        ### Разобрать что за type и что за property
-        # marking_store:
-        #   type: 'method'
-        #   property: 'state'
-        ### Тут либо supports: array
-        ### Либо support_strategy
-            support_strategy: App\Infrastructure\Workflow\SupportStrategies\PackageSupportStrategyService
+            #TODO: Уточнить что к чему \Symfony\Config\Framework\Workflows\WorkflowsConfig\MarkingStoreConfig
+            marking_store:
+                type: 'method'
+                property: 'currentPlace'
+            support_strategy: App\Infrastructure\Workflow\SupportStrategies\PlaceableSupportStrategyService
             places:
-                - import
-                - measuring
-                - sorting
-                - store
-                - pallet
-                - shipping
-                - delay
-                - done
+                import:
+                    metadata:
+                        bg_color: grey
+                        description: 'meta description'
+                measuring: ~
+                sorting: ~
+                store: ~
+                pallet: ~
+                shipping: ~
+                delay: ~
+                done: ~
             transitions:
                 to_measure:
                     from: import
                     to: measuring
+                    metadata:
+                        label: 'to_measure_metadata'
+                        color: 'blue'
+                        arrow_color: 'red'
                 to_sorting:
                     from: measuring
                     to: sorting
@@ -46,15 +50,18 @@ framework:
                 to_delay_return:
                     from: delay
                     to: import
-        delay_package:
+        package_delay:
             type: state_machine
             audit_trail:
                 enabled: true
-            support_strategy: App\Infrastructure\Workflow\SupportStrategies\PackageSupportStrategyService
+            marking_store:
+                type: 'method'
+                property: 'currentPlace'
+            support_strategy: App\Infrastructure\Workflow\SupportStrategies\PlaceableSupportStrategyService
             places:
-                - import
-                - storing
-                - restoring
+               import: ~
+               storing: ~
+               restoring: ~
             transitions:
                 to_store:
                     from: import
@@ -87,3 +94,30 @@ framework:
 #                to_import:
 #                    from: restoring
 #                    to: import
+        pallet_regular:
+            type: state_machine
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: 'method'
+                property: 'currentPlace'
+            support_strategy: App\Infrastructure\Workflow\SupportStrategies\PlaceableSupportStrategyService
+            places:
+                new: ~
+                band: ~
+                disband: ~
+                sent: ~
+                shipping: ~
+            transitions:
+                banding:
+                    from: [new, disband]
+                    to: band
+                disbanding:
+                    from: band
+                    to: disband
+                to_sent:
+                    from: band
+                    to: sent
+                to_ship:
+                    from: band
+                    to: shipping

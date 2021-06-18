@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 
-use App\Entity\Package;
+use App\Entity\Pallet;
 use App\Entity\Warehouse;
 use App\Infrastructure\Workflow\WorkflowNameMatcher;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -15,7 +15,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * @method Warehouse getReference($referenceName)
  */
-class PackageFixture extends Fixture implements DependentFixtureInterface
+class PalletFixture extends Fixture implements DependentFixtureInterface
 {
     public function __construct()
     {
@@ -24,19 +24,19 @@ class PackageFixture extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $warehouse1 = $this->getReference('warehouseMSK');
-        $package1 = $this->getPackage('RP01', $warehouse1);
-        $package2 = $this->getPackage('RP02', $warehouse1);
+        $pallet1 = $this->getPallet($warehouse1);
+        $pallet2 = $this->getPallet($warehouse1);
 
         $warehouse3 = $this->getReference('warehouseSHA');
-        $package3 = $this->getPackage('RP03', $warehouse3);
+        $pallet3 = $this->getPallet($warehouse3);
 
         $warehouse4 = $this->getReference('warehouseVRZ');
-        $package4 = $this->getPackage('RP04', $warehouse4);
+        $pallet4 = $this->getPallet($warehouse4);
 
-        $manager->persist($package1);
-        $manager->persist($package2);
-        $manager->persist($package3);
-        $manager->persist($package4);
+        $manager->persist($pallet1);
+        $manager->persist($pallet2);
+        $manager->persist($pallet3);
+        $manager->persist($pallet4);
 
         $manager->flush();
     }
@@ -48,17 +48,16 @@ class PackageFixture extends Fixture implements DependentFixtureInterface
         ];
     }
 
-    private function getPackage(string $fid, Warehouse $warehouse): Package
+    private function getPallet(Warehouse $warehouse): Pallet
     {
-        $package = new Package();
-        $package
-            ->setFid($fid)
-            ->setWarehouse($warehouse)
+        $pallet = new Pallet();
+        $pallet
             ->setCurrentPlace('import')
-            ->setWorkflowType(WorkflowNameMatcher::WORKFLOW_NAME_PACKAGE_REGULAR)
+            ->setWarehouse($warehouse)
+            ->setWorkflowType(WorkflowNameMatcher::PALLET_WORKFLOW_TYPE_REGULAR)
         ;
 
-        return $package;
+        return $pallet;
     }
 
 

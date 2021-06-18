@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="323px" preserveAspectRatio="none" style="width:206px;height:323px;" version="1.1" viewBox="0 0 206 323" width="206px" zoomAndPan="magnify"><defs><filter height="300%" id="f1gtbu92oib724" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#87B741" filter="url(#f1gtbu92oib724)" height="50" rx="12.5" ry="12.5" style="stroke: #3887C6; stroke-width: 1.5;" width="64" x="73" y="8"/><line style="stroke: #3887C6; stroke-width: 1.5;" x1="73" x2="137" y1="34.2969" y2="34.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="44" x="83" y="25.9951">import</text><rect fill="#FEFECE" filter="url(#f1gtbu92oib724)" height="50" rx="12.5" ry="12.5" style="stroke: #3887C6; stroke-width: 1.5;" width="68" x="6" y="135"/><line style="stroke: #3887C6; stroke-width: 1.5;" x1="6" x2="74" y1="161.2969" y2="161.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="48" x="16" y="152.9951">storing</text><rect fill="#FEFECE" filter="url(#f1gtbu92oib724)" height="50" rx="12.5" ry="12.5" style="stroke: #3887C6; stroke-width: 1.5;" width="82" x="51" y="262"/><line style="stroke: #3887C6; stroke-width: 1.5;" x1="51" x2="133" y1="288.2969" y2="288.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="62" x="61" y="279.9951">restoring</text><!--MD5=[603bdae03539644050ccaa9259282c2f]
+link import to storing--><path d="M82.9738,58.0607 C75.8751,67.0534 68.4442,77.5602 63,88 C56.1972,101.0451 50.9415,116.4739 47.1826,129.6963 " fill="none" id="import-&gt;storing" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="45.7647,134.8346,52.0146,127.2228,47.0947,130.0147,44.3028,125.0948,45.7647,134.8346" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="53" x="64" y="101.0669">to_store</text><!--MD5=[ac911faceb35547f8ae85cdc2c74773d]
+link storing to restoring--><path d="M34.9695,185.2059 C33.2601,199.4415 33.0604,217.2764 39,232 C42.8796,241.6171 49.3348,250.491 56.43,258.1784 " fill="none" id="storing-&gt;restoring" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="59.956,261.8549,56.6135,252.5906,56.4952,258.2462,50.8395,258.1279,59.956,261.8549" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="77" x="40" y="228.0669">to_restoring</text><!--MD5=[172fe8f837db84b9f270100736fcbde9]
+link restoring to import--><path d="M109.1671,261.8123 C114.3526,252.8094 119.3663,242.3287 122,232 C137.8136,169.9844 131.557,151.2824 122,88 C120.7517,79.7344 118.5044,70.9988 116.0442,62.9827 " fill="none" id="restoring-&gt;import" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="114.4918,58.0951,113.4039,67.8837,116.0054,62.8605,121.0285,65.462,114.4918,58.0951" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="62" x="132" y="164.5669">to_import</text><!--MD5=[30cc893c9ddce2be82c67a1edbb8bbb8]
+@startuml
+allow_mixing
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam state {
+    BackgroundColor<<initial>> #87b741
+    BackgroundColor<<marked>> #3887C6
+    BorderColor #3887C6
+    BorderColor<<marked>> Black
+    FontColor<<marked>> White
+}
+state "import" <<initial>>
+state "storing"
+state "restoring"
+"import" - -> "storing": "to_store"
+"storing" - -> "restoring": "to_restoring"
+"restoring" - -> "import": "to_import"
+@enduml
+
+PlantUML version 1.2020.06(Sun Apr 05 12:38:32 GMT 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 14-ea+33
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

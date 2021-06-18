@@ -1,34 +1,29 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Infrastructure\Workflow\PlaceableInterface;
 use App\Infrastructure\Workflow\WorkflowNameMatcher;
-use App\Repository\PackageRepository;
+use App\Repository\PalletRepository;
 use App\Validator\WorkflowAvailablePlace;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ApiResource]
-#[ORM\Entity(repositoryClass: PackageRepository::class)]
+#[ORM\Entity(repositoryClass: PalletRepository::class)]
 #[WorkflowAvailablePlace(markingProperty: 'currentPlace')]
-class Package implements PlaceableInterface
+class Pallet implements PlaceableInterface
 {
-
     public const WORKFLOW_TYPES = [
-        WorkflowNameMatcher::PACKAGE_WORKFLOW_TYPE_REGULAR,
-        WorkflowNameMatcher::PACKAGE_WORKFLOW_TYPE_DELAY
+        WorkflowNameMatcher::PALLET_WORKFLOW_TYPE_REGULAR,
     ];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
-
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Type('string')]
@@ -40,29 +35,14 @@ class Package implements PlaceableInterface
     #[Assert\NotNull]
     private string $workflowType;
 
-    #[ORM\Column(type: 'string', length: 64)]
-    #[Assert\Type('string')]
-    private string $fid;
-
     #[ORM\ManyToOne(targetEntity: Warehouse::class, inversedBy: 'packages' )]
     ##TODO: Валидатор на изменения warehouse только при отправке в другой склад или создание нового!!!
     private Warehouse $warehouse;
 
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getFid(): string
-    {
-        return $this->fid;
-    }
-
-    public function setFid(string $fid): self
-    {
-        $this->fid = $fid;
-
-        return $this;
     }
 
     public function getCurrentPlace(): ?string
@@ -100,6 +80,8 @@ class Package implements PlaceableInterface
 
         return $this;
     }
+
+
 
 
 }

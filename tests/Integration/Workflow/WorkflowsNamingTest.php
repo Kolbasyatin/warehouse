@@ -7,6 +7,7 @@ namespace App\Tests\Integration\Workflow;
 
 
 use App\Infrastructure\Workflow\PlaceableInterface;
+use App\Infrastructure\Workflow\WorkflowNameMatcher;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Workflow\Registry;
 use Symfony\Component\Workflow\Workflow;
@@ -17,11 +18,12 @@ use Symfony\Component\Workflow\Workflow;
 class WorkflowsNamingTest extends KernelTestCase
 {
     private const WORKFLOW_NAMES = [
-        PlaceableInterface::DELAY_PACKAGE_WORKFLOW_NAME,
-        PlaceableInterface::REGULAR_PACKAGE_WORKFLOW_NAME
+        WorkflowNameMatcher::WORKFLOW_NAME_PACKAGE_DELAY,
+        WorkflowNameMatcher::WORKFLOW_NAME_PACKAGE_REGULAR,
+        WorkflowNameMatcher::WORKFLOW_NAME_PALLET_REGULAR
     ];
 
-    public function testWorkflowNaming()
+    public function testWorkflowNaming(): void
     {
         static::bootKernel();
         $workflowRegistry = static::getContainer()->get(Registry::class);

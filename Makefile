@@ -16,4 +16,5 @@ dev-server:
 dev-server-stop:
 	@$(NODE_COMPOSE) down
 
-
+test:
+	@$(PHP_COMPOSE) run --rm php-cli /var/www/application/bin/phpunit --testdox

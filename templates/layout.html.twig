@@ -22,16 +22,28 @@
         </div>
         {% block content %}
         {% endblock %}
+        <div class="clearfix"></div>
+        <hr>
+        <table class="table">
+            <tbody>
         {% block workflows %}
-            {% include 'svg/regular_package.svg.twig' %}
-            {% include 'svg/delay_package.svg.twig' %}
-            {% include 'svg/regular_pallet.svg.twig' %}
-            <div class="clearfix"></div>
-            {% include 'svg/plantuml.delay_package.svg.twig' %}
-            {% include 'svg/plantuml.regular_package.svg.twig' %}
-            {% include 'svg/plantuml.regular_pallet.svg.twig' %}
-            <div class="clearfix"></div>
+            {% for workflowTemplate in [
+                'svg/package_regular.svg.twig',
+                'svg/package_delay.svg.twig',
+                'svg/pallet_regular.svg.twig',
+                'svg/plantuml.delay_package.svg.twig',
+                'svg/plantuml.regular_package.svg.twig',
+                'svg/plantuml.regular_pallet.svg.twig'
+            ] %}
+                <tr>
+                    <td>{% include workflowTemplate %}</td>
+                </tr>
 
+
+
+            {% endfor %}
+            </tbody>
+        </table>
         {% endblock %}
 
     </div>

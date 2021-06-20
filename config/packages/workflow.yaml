@@ -11,9 +11,9 @@ framework:
             support_strategy: App\Infrastructure\Workflow\SupportStrategies\PlaceableSupportStrategyService
             places:
                 import:
-                    metadata:
-                        bg_color: grey
-                        description: 'meta description'
+#                    metadata:
+#                        bg_color: grey
+#                        description: 'meta description'
                 measuring: ~
                 sorting: ~
                 store: ~
@@ -25,10 +25,10 @@ framework:
                 to_measure:
                     from: import
                     to: measuring
-                    metadata:
-                        label: 'to_measure_metadata'
-                        color: 'blue'
-                        arrow_color: 'red'
+#                    metadata:
+#                        label: 'to_measure_metadata'
+#                        color: 'blue'
+#                        arrow_color: 'red'
                 to_sorting:
                     from: measuring
                     to: sorting

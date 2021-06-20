@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Package;
+use App\Infrastructure\Warehouse\CurrentWarehouseService;
+use App\Repository\PackageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,9 +16,30 @@ use Symfony\Component\Workflow\Registry;
 #[Route('/package')]
 class PackageController extends AbstractController
 {
-    public function __construct(private Registry $registry)
+    public function __construct(
+        private Registry $registry,
+        private PackageRepository $packageRepository,
+        private CurrentWarehouseService $currentWarehouseService
+    )
     {
     }
+
+    #TODO: Запиндюрить при надобности визуалку для переходов именно для интерфейса, не для сущностей.
+    #[Route('/index', name: 'packages')]
+    public function index(): Response
+    {
+        $packages = $this->packageRepository->findBy(
+            [
+                'warehouse' => $this->currentWarehouseService->getCurrentWarehouse(),
+            ],
+            ['fid' => 'ASC']
+        );
+
+        return $this->render('package/package_list.html.twig', [
+            'packages' => $packages,
+        ]);
+    }
+
 
     #[Route('/show/package/{id}', name: 'show-package')]
     public function packageShow(Package $package): Response

@@ -17,9 +17,13 @@
                     AppBundle\Entity\Task::currentPlace
                 </code>
                 <br />
+                <code  id="current-workflow-name" data-workflow-name="{{ workflow_name(package) }}">
+                    Current workflow - {{ workflow_name(package) }}
+                </code>
+                <br />
                 =
                 <br />
-                <code>{{ package.currentPlace }}</code>
+                <code id="current-place" data-current-place="{{ package.currentPlace }}">{{ package.currentPlace }}</code>
             </p>
             <p>
             <form action="{{ path('reset-current-place', {id: package.id}) }}" method="post" class="form-inline">

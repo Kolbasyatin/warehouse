@@ -1,0 +1,39 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h3 class="text-center display-3">Packages</h3>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>PackageName</th>
+                    <th>CurrentPlace</th>
+                    <th>WorkflowName</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% for package in packages %}
+                <tr>
+                    <td>
+                        <a href="{{ path('show-package', {'id': package.id}) }}">
+                            <span>{{ package.fid }}</span>-<span>{{ package.warehouse.id }}</span>
+                        </a>
+                    </td>
+                    <td>
+                        <span>{{ package.currentPlace }}</span>
+                    </td>
+                    <td>
+                        {{ workflow_name(package) }}
+                    </td>
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
